@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Живая форма — Бетонные кашпо на заказ</title>
+  <meta name="description" content="Бетонные кашпо ручной работы на заказ. Каждое — под конкретный интерьер. Делаем в Москве, отправляем по всей России.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--color-base);
+      color: var(--color-deep);
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    button { border: none; background: none; cursor: pointer; font: inherit; }
+
+    /* ============================================================
+       DESIGN TOKENS
+    ============================================================ */
+    :root {
+      --color-base:    #E8E2D9;
+      --color-surface: #B5AFA6;
+      --color-accent:  #C4694F;
+      --color-deep:    #2E2925;
+      --color-footer:  #1A1714;
+      --color-whisper: #F5F0EA;
+      --color-mid:     #7a6e67;
+
+      --font-display: 'Fraunces', 'Georgia', serif;
+      --font-body:    'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+
+      --max-w:       1280px;
+      --px:          clamp(20px, 5vw, 80px);
+      --section-py:  clamp(80px, 11vw, 148px);
+      --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* ============================================================
+       GRAIN OVERLAY (subtle concrete texture)
+    ============================================================ */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      background-size: 220px;
+      opacity: 0.022;
+      pointer-events: none;
+      z-index: 9000;
+    }
+
+    /* ============================================================
+       CUSTOM CURSOR
+    ============================================================ */
+    .cursor {
+      display: none;
+      position: fixed;
+      width: 24px; height: 24px;
+      border: 1.5px solid var(--color-accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transform: translate(-50%, -50%);
+      transition: width .35s var(--ease-out), height .35s var(--ease-out),
+                  background .35s ease, border-color .35s ease, opacity .2s ease;
+      will-change: left, top;
+    }
+    .cursor--expand { width: 64px; height: 64px; background: rgba(196,105,79,.1); }
+    .cursor--link   { width: 12px; height: 12px; background: var(--color-accent); border-color: var(--color-accent); }
+    @media (hover: hover) and (pointer: fine) { .cursor { display: block; } body { cursor: none; } }
+
+    /* ============================================================
+       BUTTONS
+    ============================================================ */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-body);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 13px 28px;
+      border-radius: 2px;
+      transition: background .2s ease, transform .15s ease, box-shadow .2s ease;
+      will-change: transform;
+    }
+    .btn--primary { background: var(--color-accent); color: var(--color-whisper); }
+    .btn--primary:hover { background: #b05845; }
+    .btn--primary:active { transform: scale(.97); }
+    .btn--sm  { padding: 9px 20px; font-size: 12px; }
+    .btn--lg  { padding: 17px 44px; font-size: 14px; }
+
+    /* ============================================================
+       LAYOUT UTILS
+    ============================================================ */
+    .wrap {
+      width: 100%;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 var(--px);
+    }
+
+    /* ============================================================
+       SECTION LABELS & TITLES
+    ============================================================ */
+    .sec-label {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 11px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+    .sec-label--accent { color: var(--color-accent); }
+    .sec-label--muted  { color: var(--color-surface); }
+    .sec-label--ghost  { color: rgba(245,240,234,.3); }
+
+    .sec-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 6vw, 76px);
+      font-weight: 500;
+      line-height: 1.0;
+      letter-spacing: -.02em;
+    }
+    .sec-title--light { color: var(--color-whisper); }
+    .sec-title--dark  { color: var(--color-deep); }
+    .sec-head { margin-bottom: clamp(40px, 6vw, 64px); }
+
+    /* ============================================================
+       PHOTO PLACEHOLDERS
+       Gradient art — replace with real images
+    ============================================================ */
+    .ph { position: relative; overflow: hidden; background-size: cover; background-position: center; }
+    .gallery__card-bg { background-position: center 65%; }
+    .about__img-bg { background-position: center 20%; }
+    .ph--hero    { background-image: url('https://images.pexels.com/photos/31561367/pexels-photo-31561367.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop'); }
+    .ph--g1      { background-image: url('https://images.pexels.com/photos/305821/pexels-photo-305821.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop'); }
+    .ph--g2      { background-image: url('https://images.pexels.com/photos/1470171/pexels-photo-1470171.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop'); }
+    .ph--g3      { background-image: url('https://images.pexels.com/photos/1122765/pexels-photo-1122765.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop'); }
+    .ph--g4      { background-image: url('https://images.pexels.com/photos/1877878/pexels-photo-1877878.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop'); }
+    .ph--g5      { background-image: url('https://images.pexels.com/photos/1031641/pexels-photo-1031641.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop'); }
+    .ph--g6      { background-image: url('https://images.pexels.com/photos/1108572/pexels-photo-1108572.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop'); }
+    .ph--g7      { background-image: url('https://images.pexels.com/photos/1903969/pexels-photo-1903969.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop'); }
+    .ph--g8      { background-image: url('https://images.pexels.com/photos/7354480/pexels-photo-7354480.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop'); }
+    .ph--process { background-image: url('https://images.pexels.com/photos/1999895/pexels-photo-1999895.jpeg?auto=compress&cs=tinysrgb&w=900&h=1100&fit=crop'); }
+    .ph--m1      { background-image: url('https://images.pexels.com/photos/20818874/pexels-photo-20818874.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'); }
+    .ph--m2      { background-image: url('https://images.pexels.com/photos/2768396/pexels-photo-2768396.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'); }
+    .ph--m3      { background-image: url('https://images.pexels.com/photos/6898560/pexels-photo-6898560.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'); }
+    .ph--m4      { background-image: url('https://images.pexels.com/photos/4505144/pexels-photo-4505144.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'); }
+    .ph--r1      { background-image: url('https://images.pexels.com/photos/1903975/pexels-photo-1903975.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop'); }
+    .ph--r2      { background-image: url('https://images.pexels.com/photos/1931143/pexels-photo-1931143.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop'); }
+    .ph--r3      { background-image: url('https://images.pexels.com/photos/8485804/pexels-photo-8485804.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop'); }
+
+    /* ============================================================
+       ANIMATIONS  (driven by IntersectionObserver + .is-visible)
+    ============================================================ */
+
+    /* 1. Line-reveal for headings (JS wraps spans in .lw > .li) */
+    .lw { overflow: hidden; display: block; }
+    .li {
+      display: block;
+      transform: translateY(112%);
+      opacity: 0;
+      transition: transform .92s var(--ease-out), opacity .7s ease;
+    }
+    .li.d1 { transition-delay: .08s; }
+    .li.d2 { transition-delay: .17s; }
+    .li.d3 { transition-delay: .26s; }
+    .is-vis .li { transform: translateY(0); opacity: 1; }
+
+    /* 2. Fade-up for blocks */
+    .fu {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .72s ease, transform .72s var(--ease-out);
+    }
+    .fu.d1 { transition-delay: .1s; }
+    .fu.d2 { transition-delay: .2s; }
+    .fu.d3 { transition-delay: .3s; }
+    .fu.d4 { transition-delay: .4s; }
+    .fu.is-vis { opacity: 1; transform: translateY(0); }
+
+    /* 3. Clip-path image reveal (wipe up) */
+    .ri {
+      clip-path: inset(100% 0 0 0);
+      transition: clip-path 1.05s var(--ease-out);
+    }
+    .ri.is-vis { clip-path: inset(0% 0 0 0); }
+
+    /* ============================================================
+       NAV
+    ============================================================ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px var(--px);
+      transition: background .4s ease, box-shadow .4s ease, padding .4s ease;
+    }
+    .nav.s {
+      background: rgba(232,226,217,.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      box-shadow: 0 1px 0 rgba(46,41,37,.08);
+      padding: 15px var(--px);
+    }
+    .nav__logo {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--color-whisper);
+      letter-spacing: .01em;
+      transition: color .4s ease;
+    }
+    .nav.s .nav__logo { color: var(--color-deep); }
+
+    /* ============================================================
+       01  HERO
+    ============================================================ */
+    .hero {
+      position: relative;
+      height: 100svh;
+      min-height: 600px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero__bg {
+      position: absolute; inset: 0;
+      overflow: hidden;
+    }
+    .hero__bg-img {
+      width: 100%; height: 120%;
+      margin-top: -10%;
+      will-change: transform;
+    }
+    .hero__bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(18,14,12,.88) 0%, rgba(18,14,12,.35) 55%, transparent 100%);
+    }
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 0 var(--px) clamp(60px, 10vw, 120px);
+      max-width: calc(var(--max-w) + var(--px) * 2);
+      margin: 0 auto;
+    }
+    .hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 10.5vw, 148px);
+      font-weight: 600;
+      line-height: 1.0;
+      letter-spacing: -.025em;
+      color: var(--color-whisper);
+      margin-bottom: clamp(20px, 3vw, 36px);
+    }
+    .hero__sub {
+      font-size: clamp(15px, 1.8vw, 18px);
+      font-weight: 300;
+      line-height: 1.65;
+      color: rgba(245,240,234,.72);
+      margin-bottom: clamp(28px, 4vw, 48px);
+      max-width: 420px;
+    }
+    .hero__scroll {
+      position: absolute;
+      bottom: 38px; right: var(--px);
+      z-index: 1;
+      color: rgba(245,240,234,.3);
+      font-size: 18px;
+      animation: bob 2.4s ease-in-out infinite;
+    }
+    @keyframes bob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(9px)} }
+
+    /* ============================================================
+       02  GALLERY
+    ============================================================ */
+    .gallery {
+      background: var(--color-deep);
+      padding-top: clamp(44px, 6vw, 72px);
+    }
+    .gallery__head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      padding: 0 var(--px) 28px;
+      max-width: calc(var(--max-w) + var(--px) * 2);
+      margin: 0 auto;
+    }
+    .gallery__ctrls { display: flex; gap: 8px; }
+    .gallery__arr {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      border: 1px solid rgba(245,240,234,.18);
+      color: var(--color-whisper);
+      font-size: 15px;
+      display: flex; align-items: center; justify-content: center;
+      transition: border-color .2s, background .2s;
+    }
+    .gallery__arr:hover { border-color: var(--color-accent); background: rgba(196,105,79,.12); }
+
+    .gallery__track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .gallery__track::-webkit-scrollbar { display: none; }
+
+    .gallery__card {
+      flex: 0 0 100%;
+      height: clamp(420px, 66vh, 700px);
+      position: relative;
+      scroll-snap-align: start;
+      overflow: hidden;
+    }
+    .gallery__card-bg {
+      position: absolute; inset: 0;
+      transition: transform .65s var(--ease-out);
+    }
+    .gallery__card:hover .gallery__card-bg { transform: scale(1.035); }
+    .gallery__card::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(18,14,12,.82) 0%, transparent 60%);
+    }
+    .gallery__card-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      z-index: 1;
+      padding: clamp(24px, 4vw, 52px);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .gallery__name {
+      font-family: var(--font-display);
+      font-size: clamp(26px, 4.5vw, 54px);
+      font-weight: 500;
+      color: var(--color-whisper);
+      letter-spacing: -.015em;
+      line-height: 1.05;
+    }
+    .gallery__meta {
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,.5);
+      margin-top: 5px;
+    }
+    .gallery__price-val {
+      font-family: var(--font-display);
+      font-size: clamp(18px, 2.5vw, 28px);
+      color: var(--color-whisper);
+      text-align: right;
+    }
+    .gallery__price-cta {
+      display: block;
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-top: 5px;
+      text-align: right;
+    }
+
+    .gallery__footer {
+      padding: 18px var(--px) clamp(40px,6vw,72px);
+      max-width: calc(var(--max-w) + var(--px) * 2);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    .gallery__prog {
+      flex: 1;
+      height: 2px;
+      background: rgba(245,240,234,.08);
+    }
+    .gallery__prog-bar {
+      height: 100%;
+      background: var(--color-accent);
+      width: 12.5%;
+      transition: width .28s ease;
+    }
+    .gallery__count {
+      font-size: 12px;
+      letter-spacing: .1em;
+      color: rgba(245,240,234,.28);
+      white-space: nowrap;
+    }
+
+    /* ============================================================
+       03  TRUST
+    ============================================================ */
+    .trust {
+      background: var(--color-deep);
+      padding: var(--section-py) var(--px);
+    }
+    .trust__stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-bottom: clamp(48px, 7vw, 80px);
+    }
+    @media (max-width: 640px) { .trust__stats { grid-template-columns: repeat(2,1fr); } }
+
+    .trust__stat {
+      padding: clamp(22px,4vw,40px) 24px;
+      background: rgba(245,240,234,.035);
+      text-align: center;
+    }
+    .trust__num {
+      display: block;
+      font-family: var(--font-display);
+      font-size: clamp(38px, 6vw, 68px);
+      font-weight: 600;
+      color: var(--color-whisper);
+      line-height: 1;
+      letter-spacing: -.02em;
+    }
+    .trust__num--accent { color: var(--color-accent); }
+    .trust__num--sm { font-size: clamp(24px,3.5vw,44px) !important; }
+    .trust__lbl {
+      display: block;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,.35);
+      margin-top: 8px;
+    }
+
+    .trust__quote {
+      border-left: 2px solid var(--color-accent);
+      padding-left: 32px;
+      max-width: 640px;
+    }
+    .trust__q-text {
+      font-family: var(--font-display);
+      font-size: clamp(17px, 2.5vw, 24px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--color-whisper);
+      line-height: 1.65;
+      margin-bottom: 14px;
+    }
+    .trust__q-cite {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,.35);
+    }
+
+    /* ============================================================
+       04  ABOUT
+    ============================================================ */
+    .about {
+      background: var(--color-base);
+      padding: var(--section-py) var(--px);
+    }
+    .about__grid {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(40px, 7vw, 96px);
+      align-items: center;
+    }
+    @media (max-width: 768px) { .about__grid { grid-template-columns: 1fr; } }
+
+    .about__img-wrap {
+      aspect-ratio: 4/5;
+      overflow: hidden;
+      border-radius: 3px;
+    }
+    .about__img-bg {
+      width: 100%; height: 100%;
+      transition: transform .65s var(--ease-out);
+    }
+    .about__img-wrap:hover .about__img-bg { transform: scale(1.035); }
+
+    .about__title {
+      font-family: var(--font-display);
+      font-size: clamp(34px, 5.5vw, 68px);
+      font-weight: 500;
+      color: var(--color-deep);
+      line-height: 1.05;
+      letter-spacing: -.025em;
+      margin-bottom: 28px;
+    }
+    .about__text {
+      font-size: clamp(15px, 1.5vw, 17px);
+      font-weight: 300;
+      line-height: 1.78;
+      color: var(--color-mid);
+    }
+    .about__text p + p { margin-top: 14px; }
+    .about__facts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding-top: 28px;
+      margin-top: 32px;
+      border-top: 1px solid rgba(46,41,37,.1);
+    }
+    .about__fact-lbl {
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--color-surface);
+      margin-bottom: 4px;
+    }
+    .about__fact-val {
+      font-size: 14px;
+      color: var(--color-deep);
+    }
+
+    /* ============================================================
+       05  MATERIALS
+    ============================================================ */
+    .materials {
+      background: var(--color-deep);
+      padding: var(--section-py) var(--px);
+    }
+    .materials__inner { max-width: var(--max-w); margin: 0 auto; }
+    .materials__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+    }
+    @media (max-width: 900px) { .materials__grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 480px) { .materials__grid { grid-template-columns: 1fr; } }
+
+    .mat-card { background: rgba(245,240,234,.04); overflow: hidden; }
+    .mat-card__img {
+      aspect-ratio: 4/3;
+      transition: transform .65s var(--ease-out);
+    }
+    .mat-card:hover .mat-card__img { transform: scale(1.04); }
+    .mat-card__body { padding: 20px 20px 26px; }
+    .mat-card__tag {
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 7px;
+    }
+    .mat-card__title {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--color-whisper);
+      margin-bottom: 7px;
+    }
+    .mat-card__text {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.62;
+      color: rgba(245,240,234,.48);
+    }
+
+    /* ============================================================
+       06  PROCESS / HOW TO ORDER
+    ============================================================ */
+    .process {
+      background: var(--color-base);
+      padding: var(--section-py) var(--px);
+    }
+    .process__inner { max-width: var(--max-w); margin: 0 auto; }
+    .process__steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin: clamp(40px,6vw,64px) 0;
+    }
+    @media (max-width: 768px) { .process__steps { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 420px) { .process__steps { grid-template-columns: 1fr; } }
+
+    .step {
+      padding: clamp(22px,4vw,38px) 22px;
+      background: rgba(46,41,37,.05);
+    }
+    .step__num {
+      font-family: var(--font-display);
+      font-size: clamp(38px,5vw,60px);
+      font-weight: 600;
+      color: rgba(46,41,37,.08);
+      line-height: 1;
+      margin-bottom: 14px;
+    }
+    .step__title {
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 500;
+      color: var(--color-deep);
+      margin-bottom: 8px;
+    }
+    .step__text {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.65;
+      color: var(--color-mid);
+    }
+    .process__meta {
+      text-align: center;
+      font-size: 13px;
+      letter-spacing: .05em;
+      color: var(--color-surface);
+      margin-bottom: 36px;
+    }
+    .process__meta strong { color: var(--color-deep); font-weight: 500; }
+    .process__cta { text-align: center; }
+
+    /* ============================================================
+       07  REVIEWS
+    ============================================================ */
+    .reviews {
+      background: var(--color-deep);
+      padding: var(--section-py) var(--px);
+    }
+    .reviews__inner { max-width: var(--max-w); margin: 0 auto; }
+    .reviews__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: clamp(40px,6vw,64px);
+    }
+    @media (max-width: 860px) { .reviews__grid { grid-template-columns: 1fr; max-width: 460px; } }
+
+    .rev-card { background: rgba(245,240,234,.04); overflow: hidden; }
+    .rev-card__img {
+      aspect-ratio: 4/3;
+      transition: transform .65s var(--ease-out);
+    }
+    .rev-card:hover .rev-card__img { transform: scale(1.04); }
+    .rev-card__body { padding: 22px; }
+    .rev-card__stars { color: var(--color-accent); letter-spacing: 2px; font-size: 13px; margin-bottom: 13px; }
+    .rev-card__text {
+      font-size: 14px;
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.7;
+      color: rgba(245,240,234,.68);
+      margin-bottom: 14px;
+    }
+    .rev-card__name {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,.3);
+    }
+    .rev-card__product {
+      font-size: 11px;
+      color: var(--color-accent);
+      letter-spacing: .06em;
+      margin-top: 4px;
+    }
+    .reviews__more {
+      text-align: center;
+      margin-top: 36px;
+    }
+    .reviews__more a {
+      font-size: 12px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,.28);
+      text-decoration: underline;
+      text-underline-offset: 4px;
+      transition: color .2s;
+    }
+    .reviews__more a:hover { color: rgba(245,240,234,.7); }
+
+    /* ============================================================
+       08  PRICING
+    ============================================================ */
+    .pricing {
+      background: var(--color-base);
+      padding: var(--section-py) var(--px);
+    }
+    .pricing__inner { max-width: var(--max-w); margin: 0 auto; }
+    .pricing__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin: clamp(40px,6vw,64px) 0 28px;
+    }
+    @media (max-width: 720px) { .pricing__grid { grid-template-columns: 1fr; max-width: 400px; } }
+
+    .price-card {
+      padding: clamp(26px,4vw,46px) clamp(20px,3vw,32px);
+      background: rgba(46,41,37,.05);
+      transition: background .25s ease;
+    }
+    .price-card:hover { background: rgba(46,41,37,.09); }
+    .price-card--hi { background: var(--color-accent); }
+    .price-card--hi:hover { background: #b05845; }
+    .price-card__range {
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--color-surface);
+      margin-bottom: 5px;
+    }
+    .price-card--hi .price-card__range { color: rgba(245,240,234,.55); }
+    .price-card__name {
+      font-family: var(--font-display);
+      font-size: clamp(20px,2.8vw,28px);
+      font-weight: 500;
+      color: var(--color-deep);
+      margin-bottom: 22px;
+    }
+    .price-card--hi .price-card__name { color: var(--color-whisper); }
+    .price-card__price {
+      font-family: var(--font-display);
+      font-size: clamp(30px,4.5vw,46px);
+      font-weight: 600;
+      color: var(--color-deep);
+      line-height: 1;
+    }
+    .price-card--hi .price-card__price { color: var(--color-whisper); }
+    .price-card__from { font-size: 13px; font-weight: 300; font-family: var(--font-body); vertical-align: super; }
+    .price-card__cur  { font-size: 18px; font-family: var(--font-body); }
+    .price-card__desc {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.6;
+      color: var(--color-mid);
+      border-top: 1px solid rgba(46,41,37,.1);
+      padding-top: 16px;
+      margin-top: 16px;
+    }
+    .price-card--hi .price-card__desc { color: rgba(245,240,234,.65); border-color: rgba(245,240,234,.18); }
+
+    .pricing__note {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--color-surface);
+      line-height: 1.65;
+      text-align: center;
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+    .pricing__tagline {
+      text-align: center;
+      font-family: var(--font-display);
+      font-size: clamp(17px,2.5vw,24px);
+      font-style: italic;
+      color: var(--color-mid);
+    }
+
+    /* ============================================================
+       09  FINAL CTA
+    ============================================================ */
+    .final-cta {
+      background: var(--color-deep);
+      min-height: 100svh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--section-py) var(--px);
+    }
+    .final-cta__inner {
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+    }
+    .final-cta__title {
+      font-family: var(--font-display);
+      font-size: clamp(72px, 14vw, 160px);
+      font-weight: 600;
+      color: var(--color-whisper);
+      line-height: .95;
+      letter-spacing: -.035em;
+      margin-bottom: 30px;
+    }
+    .final-cta__sub {
+      font-size: clamp(15px,1.8vw,18px);
+      font-weight: 300;
+      color: rgba(245,240,234,.58);
+      line-height: 1.65;
+      margin-bottom: 44px;
+    }
+    .final-cta__alts {
+      margin-top: 22px;
+      font-size: 13px;
+      color: rgba(245,240,234,.28);
+    }
+    .final-cta__alts a {
+      color: rgba(245,240,234,.38);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color .2s;
+    }
+    .final-cta__alts a:hover { color: var(--color-whisper); }
+    .final-cta__meta {
+      margin-top: 56px;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,.18);
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      background: var(--color-footer);
+      padding: 26px var(--px);
+    }
+    .footer__inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+    .footer__logo { font-family: var(--font-display); font-size: 15px; color: rgba(245,240,234,.32); }
+    .footer__links { display: flex; gap: 22px; }
+    .footer__links a {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: rgba(245,240,234,.22);
+      transition: color .2s;
+    }
+    .footer__links a:hover { color: rgba(245,240,234,.55); }
+    .footer__copy { font-size: 11px; color: rgba(245,240,234,.16); }
+
+    /* ============================================================
+       STICKY MOBILE CTA
+    ============================================================ */
+    .sticky {
+      display: none;
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      z-index: 400;
+      padding: 10px 16px;
+      background: var(--color-deep);
+      box-shadow: 0 -1px 0 rgba(245,240,234,.05);
+    }
+    .sticky__btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      background: var(--color-accent);
+      color: var(--color-whisper);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 14px;
+      border-radius: 2px;
+    }
+    @media (max-width: 768px) {
+      .sticky { display: block; }
+      body { padding-bottom: 60px; }
+    }
+
+    /* ============================================================
+       MOBILE (≤ 480px) — fine-tuning
+    ============================================================ */
+    @media (max-width: 480px) {
+      .hero__title {
+        font-size: clamp(34px, 9.5vw, 52px);
+      }
+      .hero__sub {
+        font-size: 14px;
+      }
+      .btn--lg {
+        padding: 15px 28px;
+        font-size: 13px;
+      }
+      .gallery__name {
+        font-size: clamp(22px, 6vw, 34px);
+      }
+      .sec-title {
+        font-size: clamp(30px, 8vw, 48px);
+      }
+      .nav {
+        padding: 16px 20px;
+      }
+      .about__img-wrap {
+        aspect-ratio: 3/2;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+<!-- ─── CURSOR ──────────────────────────────────────────────── -->
+<div class="cursor" id="cursor"></div>
+
+<!-- ─── NAV ────────────────────────────────────────────────── -->
+<nav class="nav" id="nav">
+  <a href="#" class="nav__logo">Живая форма</a>
+  <a href="https://t.me/" class="btn btn--sm btn--primary" id="navCta">Написать →</a>
+</nav>
+
+<!-- ─── 01 HERO ─────────────────────────────────────────────── -->
+<section id="hero" class="hero">
+  <div class="hero__bg">
+    <div class="hero__bg-img ph ph--hero" id="heroBg"></div>
+  </div>
+  <div class="hero__content">
+    <h1 class="hero__title" id="heroTitle">
+      <span>Ручная работа.</span>
+      <span>Живая форма.</span>
+    </h1>
+    <p class="hero__sub fu d2">
+      Бетонные кашпо на заказ —<br>
+      каждое под конкретный интерьер.<br>
+      Делаем в Москве. Отправляем по всей России.
+    </p>
+    <a href="#gallery" class="btn btn--primary fu d3" id="heroBtn">Смотреть работы ↓</a>
+  </div>
+  <div class="hero__scroll">↓</div>
+</section>
+
+<!-- ─── 02 GALLERY ──────────────────────────────────────────── -->
+<section id="gallery" class="gallery">
+  <div class="gallery__head">
+    <h2 class="sec-title sec-title--light" id="gallTitle">
+      <span>Портфолио</span>
+    </h2>
+    <div class="gallery__ctrls">
+      <button class="gallery__arr" id="gPrev" aria-label="Назад">←</button>
+      <button class="gallery__arr" id="gNext" aria-label="Вперёд">→</button>
+    </div>
+  </div>
+
+  <div class="gallery__track" id="gallTrack">
+
+    <div class="gallery__card">
+      <div class="gallery__card-bg ph ph--g1"></div>
+      <div class="gallery__card-info">
+        <div>
+          <div class="gallery__name">Цилиндр</div>
+          <div class="gallery__meta">⌀ 18 см · Серый матовый</div>
+        </div>
+        <div>
+          <div class="gallery__price-val">от 3 500 ₽</div>
+          <span class="gallery__price-cta">Хочу такой →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery__card">
+      <div class="gallery__card-bg ph ph--g2"></div>
+      <div class="gallery__card-info">
+        <div>
+          <div class="gallery__name">Параллелепипед</div>
+          <div class="gallery__meta">25×25×30 см · Белый с чёрным</div>
+        </div>
+        <div>
+          <div class="gallery__price-val">от 5 000 ₽</div>
+          <span class="gallery__price-cta">Хочу такой →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery__card">
+      <div class="gallery__card-bg ph ph--g3"></div>
+      <div class="gallery__card-info">
+        <div>
+          <div class="gallery__name">Конус</div>
+          <div class="gallery__meta">⌀ 22 см · Терракотовый</div>
+        </div>
+        <div>
+          <div class="gallery__price-val">от 4 200 ₽</div>
+          <span class="gallery__price-cta">Хочу такой →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery__card">
+      <div class="gallery__card-bg ph ph--g4"></div>
+      <div class="gallery__card-info">
+        <div>
+          <div class="gallery__name">Ваза</div>
+          <div class="gallery__meta">h 40 см · Серый с белым пигментом</div>
+        </div>
+        <div>
+          <div class="gallery__price-val">от 7 500 ₽</div>
+          <span class="gallery__price-cta">Хочу такой →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery__card">
+      <div class="gallery__card-bg ph ph--g5"></div>
+      <div class="gallery__card-info">
+        <div>
+          <div class="gallery__name">Мини</div>
+          <div class="gallery__meta">⌀ 10 см · Натуральный серый</div>
+        </div>
+        <div>
+          <div class="gallery__price-val">от 2 500 ₽</div>
+          <span class="gallery__price-cta">Хочу такой →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery__card">
+      <div class="gallery__card-bg ph ph--g6"></div>
+      <div class="gallery__card-info">
+        <div>
+          <div class="gallery__name">Напольный</div>
+          <div class="gallery__meta">⌀ 35 см · Тёмный антрацит</div>
+        </div>
+        <div>
+          <div class="gallery__price-val">от 9 000 ₽</div>
+          <span class="gallery__price-cta">Хочу такой →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery__card">
+      <div class="gallery__card-bg ph ph--g7"></div>
+      <div class="gallery__card-info">
+        <div>
+          <div class="gallery__name">Настенный</div>
+          <div class="gallery__meta">20×15 см · Белый</div>
+        </div>
+        <div>
+          <div class="gallery__price-val">от 3 800 ₽</div>
+          <span class="gallery__price-cta">Хочу такой →</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery__card">
+      <div class="gallery__card-bg ph ph--g8"></div>
+      <div class="gallery__card-info">
+        <div>
+          <div class="gallery__name">Кастом</div>
+          <div class="gallery__meta">Ваш размер и форма</div>
+        </div>
+        <div>
+          <div class="gallery__price-val">по запросу</div>
+          <span class="gallery__price-cta">Обсудить →</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="gallery__footer">
+    <div class="gallery__prog">
+      <div class="gallery__prog-bar" id="gallProg"></div>
+    </div>
+    <div class="gallery__count" id="gallCount">01 / 08</div>
+  </div>
+</section>
+
+<!-- ─── 03 TRUST ────────────────────────────────────────────── -->
+<section id="trust" class="trust">
+  <div class="wrap" style="max-width:var(--max-w)">
+    <div class="trust__stats">
+      <div class="trust__stat fu">
+        <span class="trust__num trust__num--accent" data-cnt="200" data-sfx="+">0+</span>
+        <span class="trust__lbl">изделий изготовлено</span>
+      </div>
+      <div class="trust__stat fu d1">
+        <span class="trust__num" data-cnt-d="4.9">0</span>
+        <span class="trust__lbl">средняя оценка</span>
+      </div>
+      <div class="trust__stat fu d2">
+        <span class="trust__num trust__num--sm">3–4 нед.</span>
+        <span class="trust__lbl">срок производства</span>
+      </div>
+      <div class="trust__stat fu d3">
+        <span class="trust__num trust__num--sm">с 2019</span>
+        <span class="trust__lbl">в деле</span>
+      </div>
+    </div>
+
+    <div class="trust__quote fu">
+      <p class="trust__q-text">
+        "Прислали фото до отправки, аккуратно упаковали, кашпо доехало без единой царапины.
+        Ждала три недели — стоило того."
+      </p>
+      <span class="trust__q-cite">— Анна, Санкт-Петербург · декабрь 2025</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 04 ABOUT ─────────────────────────────────────────────── -->
+<section id="about" class="about">
+  <div class="about__grid">
+    <div>
+      <div class="about__img-wrap ri">
+        <div class="about__img-bg ph ph--process"></div>
+      </div>
+    </div>
+    <div>
+      <span class="sec-label sec-label--accent">О мастере</span>
+      <h2 class="about__title" id="aboutTitle">
+        <span>Антон.</span>
+        <span>Бетон.</span>
+        <span>Форма.</span>
+      </h2>
+      <div class="about__text fu">
+        <p>Я работаю с бетоном с 2019 года. Сначала это было хобби — нравилось, что из серой массы можно вытащить точную, чистую форму. Потом начал делать кашпо для себя. Потом для друзей. Потом понял, что это то, чем хочу заниматься.</p>
+        <p>Я выбраковываю любое изделие с пузырями или трещинами, даже если это стоит лишнего дня работы. Не потому что так положено — а потому что иначе не могу.</p>
+        <p>Каждое кашпо — отдельный проект. Уточняю, куда оно пойдёт, что в нём будет расти, какое освещение в комнате. Форма и цвет должны работать именно там.</p>
+      </div>
+      <div class="about__facts fu d1">
+        <div>
+          <div class="about__fact-lbl">Процесс</div>
+          <div class="about__fact-val">Ручная работа на каждом этапе</div>
+        </div>
+        <div>
+          <div class="about__fact-lbl">Пигменты</div>
+          <div class="about__fact-val">Только минеральные</div>
+        </div>
+        <div>
+          <div class="about__fact-lbl">До отправки</div>
+          <div class="about__fact-val">Фото вашего изделия</div>
+        </div>
+        <div>
+          <div class="about__fact-lbl">Доставка</div>
+          <div class="about__fact-val">По всей России</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 05 MATERIALS ─────────────────────────────────────────── -->
+<section id="materials" class="materials">
+  <div class="materials__inner">
+    <div class="sec-head">
+      <span class="sec-label sec-label--accent">Качество</span>
+      <h2 class="sec-title sec-title--light" id="matTitle"><span>Из чего и как</span></h2>
+    </div>
+    <div class="materials__grid">
+      <div class="mat-card fu">
+        <div class="mat-card__img ri ph ph--m1"></div>
+        <div class="mat-card__body">
+          <div class="mat-card__tag">Состав</div>
+          <h3 class="mat-card__title">Бетон М400</h3>
+          <p class="mat-card__text">С фиброволокном. Не трескается при перепадах температур.</p>
+        </div>
+      </div>
+      <div class="mat-card fu d1">
+        <div class="mat-card__img ri ph ph--m2"></div>
+        <div class="mat-card__body">
+          <div class="mat-card__tag">Цвет</div>
+          <h3 class="mat-card__title">Минеральные пигменты</h3>
+          <p class="mat-card__text">Не выцветают на солнце. Не смываются водой.</p>
+        </div>
+      </div>
+      <div class="mat-card fu d2">
+        <div class="mat-card__img ri ph ph--m3"></div>
+        <div class="mat-card__body">
+          <div class="mat-card__tag">Дренаж</div>
+          <h3 class="mat-card__title">В комплекте</h3>
+          <p class="mat-card__text">Дренажное отверстие + керамзитовый поддон в каждом кашпо.</p>
+        </div>
+      </div>
+      <div class="mat-card fu d3">
+        <div class="mat-card__img ri ph ph--m4"></div>
+        <div class="mat-card__body">
+          <div class="mat-card__tag">Защита</div>
+          <h3 class="mat-card__title">Герметик</h3>
+          <p class="mat-card__text">Гидрофобное покрытие — безопасно для корней, защищает бетон.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 06 PROCESS ───────────────────────────────────────────── -->
+<section id="process" class="process">
+  <div class="process__inner">
+    <div class="sec-head">
+      <span class="sec-label sec-label--muted">Порядок работы</span>
+      <h2 class="sec-title sec-title--dark" id="procTitle"><span>Как это работает</span></h2>
+    </div>
+    <div class="process__steps">
+      <div class="step fu">
+        <div class="step__num">01</div>
+        <h3 class="step__title">Напишите</h3>
+        <p class="step__text">Telegram или WhatsApp. Ответим в течение 2 часов в рабочие дни.</p>
+      </div>
+      <div class="step fu d1">
+        <div class="step__num">02</div>
+        <h3 class="step__title">Обсуждаем</h3>
+        <p class="step__text">Размер, форма, цвет, срок. Предоплата 50% для старта работы.</p>
+      </div>
+      <div class="step fu d2">
+        <div class="step__num">03</div>
+        <h3 class="step__title">Производим</h3>
+        <p class="step__text">3–4 недели. Присылаем фото прогресса. Согласовываем до отправки.</p>
+      </div>
+      <div class="step fu d3">
+        <div class="step__num">04</div>
+        <h3 class="step__title">Доставляем</h3>
+        <p class="step__text">По всей России. Упаковываем в 3 слоя пены. Остаток перед отправкой.</p>
+      </div>
+    </div>
+    <p class="process__meta fu">
+      Срок: <strong>3–4 недели</strong> &nbsp;·&nbsp; Предоплата <strong>50%</strong> &nbsp;·&nbsp; Фото <strong>перед отправкой</strong>
+    </p>
+    <div class="process__cta fu d1">
+      <a href="https://t.me/" class="btn btn--primary btn--mag">Написать в Telegram</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 07 REVIEWS ───────────────────────────────────────────── -->
+<section id="reviews" class="reviews">
+  <div class="reviews__inner">
+    <div class="sec-head">
+      <span class="sec-label sec-label--accent">Отзывы</span>
+      <h2 class="sec-title sec-title--light" id="revTitle"><span>Что говорят клиенты</span></h2>
+    </div>
+    <div class="reviews__grid">
+      <div class="rev-card fu">
+        <div class="rev-card__img ri ph ph--r1"></div>
+        <div class="rev-card__body">
+          <div class="rev-card__stars">★★★★★</div>
+          <p class="rev-card__text">"Заказывала под конкретную монстеру — обсудили высоту по фото растения. Результат точно то, что я представляла. Пришло крепко упакованным."</p>
+          <div class="rev-card__name">Мария · Москва · январь 2026</div>
+          <div class="rev-card__product">Цилиндр ⌀22, серый матовый</div>
+        </div>
+      </div>
+      <div class="rev-card fu d1">
+        <div class="rev-card__img ri ph ph--r2"></div>
+        <div class="rev-card__body">
+          <div class="rev-card__stars">★★★★★</div>
+          <p class="rev-card__text">"Прислали фото до отправки и предупредили о задержке на 3 дня — это честно. Текстура живая, не похожа ни на что из магазина."</p>
+          <div class="rev-card__name">Дмитрий · Санкт-Петербург · ноябрь 2025</div>
+          <div class="rev-card__product">Параллелепипед 20×20×25, белый</div>
+        </div>
+      </div>
+      <div class="rev-card fu d2">
+        <div class="rev-card__img ri ph ph--r3"></div>
+        <div class="rev-card__body">
+          <div class="rev-card__stars">★★★★★</div>
+          <p class="rev-card__text">"Это уже третий заказ. Каждый раз обсуждаем детали — и каждый раз получаю именно то, что хотела. Хочу ещё большой напольный."</p>
+          <div class="rev-card__name">Елена · Екатеринбург · октябрь 2025</div>
+          <div class="rev-card__product">Конус терракота, мини-серия</div>
+        </div>
+      </div>
+    </div>
+    <div class="reviews__more">
+      <a href="https://instagram.com/">Смотреть все отзывы в Instagram →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 08 PRICING ───────────────────────────────────────────── -->
+<section id="pricing" class="pricing">
+  <div class="pricing__inner">
+    <div class="sec-head">
+      <span class="sec-label sec-label--muted">Стоимость</span>
+      <h2 class="sec-title sec-title--dark" id="priceTitle"><span>Сколько стоит</span></h2>
+    </div>
+    <div class="pricing__grid">
+      <div class="price-card fu">
+        <div class="price-card__range">до 15 см</div>
+        <div class="price-card__name">Настольное</div>
+        <div class="price-card__price">
+          <span class="price-card__from">от </span>2&thinsp;500<span class="price-card__cur"> ₽</span>
+        </div>
+        <div class="price-card__desc">На подоконник, полку, стол. Небольшие растения — суккуленты, кактусы.</div>
+      </div>
+      <div class="price-card price-card--hi fu d1">
+        <div class="price-card__range">20–35 см</div>
+        <div class="price-card__name">Среднее</div>
+        <div class="price-card__price">
+          <span class="price-card__from">от </span>5&thinsp;500<span class="price-card__cur"> ₽</span>
+        </div>
+        <div class="price-card__desc">Напольный или на тумбу. Под среднее и крупное растение.</div>
+      </div>
+      <div class="price-card fu d2">
+        <div class="price-card__range">от 40 см</div>
+        <div class="price-card__name">Крупное</div>
+        <div class="price-card__price">
+          <span class="price-card__from">от </span>10&thinsp;000<span class="price-card__cur"> ₽</span>
+        </div>
+        <div class="price-card__desc">Акцентный объект. Под большие растения — фикус, пальма.</div>
+      </div>
+    </div>
+    <p class="pricing__note fu">
+      Цена зависит от размера, формы и отделки поверхности.<br>
+      Нестандартные заказы — обсуждаем индивидуально. Предоплата 50%.
+    </p>
+    <p class="pricing__tagline fu d1">
+      Изделие, которое прослужит десятилетия — не один сезон.
+    </p>
+  </div>
+</section>
+
+<!-- ─── 09 FINAL CTA ─────────────────────────────────────────── -->
+<section id="cta" class="final-cta">
+  <div class="final-cta__inner">
+    <h2 class="final-cta__title" id="ctaTitle">
+      <span>Готовы?</span>
+    </h2>
+    <p class="final-cta__sub fu">
+      Напишите — обсудим ваш заказ.<br>
+      Бесплатно. Без обязательств. Отвечаю сегодня.
+    </p>
+    <a href="https://t.me/" class="btn btn--primary btn--lg btn--mag fu d1">Написать в Telegram</a>
+    <div class="final-cta__alts fu d2">
+      или <a href="https://wa.me/">WhatsApp</a> &nbsp;·&nbsp; или <a href="mailto:hello@example.com">hello@example.com</a>
+    </div>
+    <div class="final-cta__meta fu d3">
+      Москва &nbsp;·&nbsp; @instagram_handle &nbsp;·&nbsp; 200+ изделий с 2019
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ───────────────────────────────────────────────── -->
+<footer class="footer">
+  <div class="footer__inner">
+    <span class="footer__logo">Живая форма</span>
+    <nav class="footer__links">
+      <a href="https://instagram.com/">Instagram</a>
+      <a href="https://t.me/">Telegram</a>
+      <a href="https://wa.me/">WhatsApp</a>
+    </nav>
+    <span class="footer__copy">© 2026 · Бетонные кашпо · Москва</span>
+  </div>
+</footer>
+
+<!-- ─── STICKY MOBILE CTA ────────────────────────────────────── -->
+<div class="sticky" id="sticky">
+  <a href="https://t.me/" class="sticky__btn">Написать в Telegram</a>
+</div>
+
+<!-- ============================================================
+     JAVASCRIPT
+============================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  // ── Helpers ──────────────────────────────────────────────────
+  const $ = id => document.getElementById(id);
+  const $$ = sel => document.querySelectorAll(sel);
+
+  // ── 1. PREP: wrap .reveal-title spans in clip containers ──────
+  function initTextReveals() {
+    $$('[id$="Title"], .hero__title, .about__title').forEach(el => {
+      el.querySelectorAll('span').forEach((span, i) => {
+        const lw = document.createElement('div');
+        lw.className = 'lw';
+        const li = document.createElement('div');
+        li.className = 'li' + (i > 0 ? ' d' + i : '');
+        li.textContent = span.textContent;
+        lw.appendChild(li);
+        span.replaceWith(lw);
+      });
+      el.classList.add('reveal-title');
+    });
+  }
+
+  // ── 2. INTERSECTION OBSERVER (animations) ─────────────────────
+  function initObserver() {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-vis');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.14, rootMargin: '0px 0px -50px 0px' });
+
+    $$('.reveal-title, .fu, .ri').forEach(el => io.observe(el));
+  }
+
+  // ── 3. COUNTER ANIMATION ──────────────────────────────────────
+  function initCounters() {
+    const cio = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        cio.unobserve(e.target);
+        const el = e.target;
+        const isDecimal = el.hasAttribute('data-cnt-d');
+        const target = isDecimal
+          ? parseFloat(el.getAttribute('data-cnt-d'))
+          : parseInt(el.getAttribute('data-cnt'));
+        const suffix = el.getAttribute('data-sfx') || '';
+        const dur = 1500;
+        const t0 = performance.now();
+
+        const tick = now => {
+          const p = Math.min((now - t0) / dur, 1);
+          const e2 = 1 - Math.pow(1 - p, 3);
+          el.textContent = isDecimal
+            ? (target * e2).toFixed(1) + suffix
+            : Math.round(target * e2) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.6 });
+
+    $$('[data-cnt], [data-cnt-d]').forEach(el => cio.observe(el));
+  }
+
+  // ── 4. NAV scroll effect ───────────────────────────────────────
+  function initNav() {
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('s', window.scrollY > 70);
+    }, { passive: true });
+  }
+
+  // ── 5. SMOOTH SCROLL ──────────────────────────────────────────
+  function initSmooth() {
+    $$('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const target = document.querySelector(a.getAttribute('href'));
+        if (!target) return;
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  }
+
+  // ── 6. GALLERY ────────────────────────────────────────────────
+  function initGallery() {
+    const track = $('gallTrack');
+    const prog  = $('gallProg');
+    const cnt   = $('gallCount');
+    if (!track) return;
+
+    const cards = track.querySelectorAll('.gallery__card');
+    const total = cards.length;
+    let cur = 0;
+
+    const go = idx => {
+      cur = Math.max(0, Math.min(idx, total - 1));
+      track.scrollTo({ left: cur * track.offsetWidth, behavior: 'smooth' });
+    };
+
+    $('gPrev').addEventListener('click', () => go(cur - 1));
+    $('gNext').addEventListener('click', () => go(cur + 1));
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') go(cur + 1);
+      if (e.key === 'ArrowLeft')  go(cur - 1);
+    });
+
+    track.addEventListener('scroll', () => {
+      cur = Math.round(track.scrollLeft / track.offsetWidth);
+      prog.style.width = ((cur + 1) / total * 100) + '%';
+      cnt.textContent = String(cur + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    }, { passive: true });
+  }
+
+  // ── 7. CUSTOM CURSOR ──────────────────────────────────────────
+  function initCursor() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const cur = $('cursor');
+    if (!cur) return;
+
+    let mx = 0, my = 0, cx = 0, cy = 0;
+    window.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+    const loop = () => {
+      cx += (mx - cx) * 0.14;
+      cy += (my - cy) * 0.14;
+      cur.style.left = cx + 'px';
+      cur.style.top  = cy + 'px';
+      requestAnimationFrame(loop);
+    };
+    loop();
+
+    $$('.gallery__card').forEach(el => {
+      el.addEventListener('mouseenter', () => cur.classList.add('cursor--expand'));
+      el.addEventListener('mouseleave', () => cur.classList.remove('cursor--expand'));
+    });
+    $$('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cur.classList.add('cursor--link'));
+      el.addEventListener('mouseleave', () => cur.classList.remove('cursor--link'));
+    });
+  }
+
+  // ── 8. MAGNETIC HOVER ─────────────────────────────────────────
+  function initMagnetic() {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    $$('.btn--mag').forEach(btn => {
+      btn.addEventListener('mousemove', e => {
+        const r  = btn.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width  / 2)) * 0.32;
+        const dy = (e.clientY - (r.top  + r.height / 2)) * 0.32;
+        btn.style.transform = `translate(${dx}px,${dy}px)`;
+        btn.style.transition = 'transform 0s';
+      });
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transition = 'transform .45s cubic-bezier(.16,1,.3,1)';
+        btn.style.transform  = '';
+      });
+    });
+  }
+
+  // ── 9. HERO PARALLAX ──────────────────────────────────────────
+  function initParallax() {
+    const bg   = $('heroBg');
+    const hero = $('hero');
+    if (!bg || !hero) return;
+    window.addEventListener('scroll', () => {
+      if (window.scrollY < hero.offsetHeight * 1.2) {
+        bg.style.transform = `translateY(${window.scrollY * 0.22}px)`;
+      }
+    }, { passive: true });
+  }
+
+  // ── 10. STICKY CTA visibility ─────────────────────────────────
+  function initSticky() {
+    const sticky = $('sticky');
+    const cta    = $('cta');
+    if (!sticky || !cta) return;
+
+    const sio = new IntersectionObserver(entries => {
+      // Hide sticky bar when final CTA is visible
+      sticky.style.opacity    = entries[0].isIntersecting ? '0' : '1';
+      sticky.style.pointerEvents = entries[0].isIntersecting ? 'none' : '';
+    }, { threshold: 0.1 });
+    sio.observe(cta);
+  }
+
+  // ── BOOT ──────────────────────────────────────────────────────
+  document.addEventListener('DOMContentLoaded', () => {
+    initTextReveals();
+    initObserver();
+    initCounters();
+    initNav();
+    initSmooth();
+    initGallery();
+    initCursor();
+    initMagnetic();
+    initParallax();
+    initSticky();
+
+    // Kick hero title animation immediately (already in viewport)
+    setTimeout(() => {
+      document.querySelector('.hero__title')?.classList.add('is-vis');
+    }, 200);
+  });
+})();
+</script>
+
+</body>
+</html>
