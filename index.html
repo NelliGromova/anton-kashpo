@@ -146,15 +146,8 @@
     .ph { position: relative; overflow: hidden; background-size: cover; background-position: center; }
     .gallery__card-bg { background-position: center 40%; }
     .about__img-bg { background-position: center 20%; }
-    .ph--hero    { background-image: url('https://images.pexels.com/photos/13130549/pexels-photo-13130549.jpeg?auto=compress&cs=tinysrgb&w=1600&h=900&fit=crop'); }
-    .ph--g1      { background-image: url('https://images.pexels.com/photos/15942814/pexels-photo-15942814.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop'); }
-    .ph--g2      { background-image: url('https://images.pexels.com/photos/3285137/pexels-photo-3285137.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop'); }
-    .ph--g3      { background-image: url('https://images.pexels.com/photos/34896773/pexels-photo-34896773.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop'); }
-    .ph--g4      { background-image: url('https://images.pexels.com/photos/18426842/pexels-photo-18426842.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop'); }
-    .ph--g5      { background-image: url('https://images.pexels.com/photos/6908500/pexels-photo-6908500.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop'); }
-    .ph--g6      { background-image: url('https://images.pexels.com/photos/3801167/pexels-photo-3801167.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop'); }
-    .ph--g7      { background-image: url('https://images.pexels.com/photos/7854200/pexels-photo-7854200.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop'); }
-    .ph--g8      { background-image: url('https://images.pexels.com/photos/4846221/pexels-photo-4846221.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop'); }
+    .ph--hero    { background: linear-gradient(160deg, #232321 0%, #1a1a18 60%, #0f0f0e 100%); }
+    /* ph--g1 … ph--g8: заменить на фото изделий */
     .ph--process { background-image: url('https://images.pexels.com/photos/1999895/pexels-photo-1999895.jpeg?auto=compress&cs=tinysrgb&w=900&h=1100&fit=crop'); }
     .ph--m1      { background-image: url('https://images.pexels.com/photos/20818874/pexels-photo-20818874.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'); }
     .ph--m2      { background-image: url('https://images.pexels.com/photos/2768396/pexels-photo-2768396.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'); }
@@ -295,118 +288,76 @@
     ============================================================ */
     .gallery {
       background: var(--color-deep);
-      padding-top: clamp(44px, 6vw, 72px);
+      padding: clamp(44px, 6vw, 72px) 0;
     }
     .gallery__head {
       display: flex;
       align-items: flex-end;
-      justify-content: space-between;
       padding: 0 var(--px) 28px;
       max-width: calc(var(--max-w) + var(--px) * 2);
       margin: 0 auto;
     }
-    .gallery__ctrls { display: flex; gap: 8px; }
-    .gallery__arr {
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      border: 1px solid rgba(245,240,234,.18);
-      color: var(--color-whisper);
-      font-size: 15px;
-      display: flex; align-items: center; justify-content: center;
-      transition: border-color .2s, background .2s;
+    .gallery__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
     }
-    .gallery__arr:hover { border-color: var(--color-accent); background: rgba(196,105,79,.12); }
-
-    .gallery__track {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-    }
-    .gallery__track::-webkit-scrollbar { display: none; }
+    @media (max-width: 1100px) { .gallery__grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 720px)  { .gallery__grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px)  { .gallery__grid { grid-template-columns: 1fr; } }
 
     .gallery__card {
-      flex: 0 0 100%;
-      height: clamp(420px, 66vh, 700px);
+      aspect-ratio: 3/4;
       position: relative;
-      scroll-snap-align: start;
       overflow: hidden;
     }
     .gallery__card-bg {
       position: absolute; inset: 0;
+      background: #242422;
+      background-size: cover;
+      background-position: center;
       transition: transform .65s var(--ease-out);
     }
     .gallery__card:hover .gallery__card-bg { transform: scale(1.035); }
     .gallery__card::after {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(to top, rgba(18,14,12,.82) 0%, transparent 60%);
+      background: linear-gradient(to top, rgba(18,14,12,.94) 0%, rgba(18,14,12,.25) 50%, transparent 80%);
     }
     .gallery__card-info {
       position: absolute;
       bottom: 0; left: 0; right: 0;
       z-index: 1;
-      padding: clamp(24px, 4vw, 52px);
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
+      padding: clamp(14px, 2vw, 24px);
     }
     .gallery__name {
       font-family: var(--font-display);
-      font-size: clamp(26px, 4.5vw, 54px);
+      font-size: clamp(18px, 1.8vw, 24px);
       font-weight: 500;
       color: var(--color-whisper);
       letter-spacing: -.015em;
-      line-height: 1.05;
+      line-height: 1.1;
+      margin-bottom: 3px;
     }
     .gallery__meta {
-      font-size: 12px;
-      letter-spacing: .08em;
+      font-size: 10px;
+      letter-spacing: .07em;
       text-transform: uppercase;
-      color: rgba(245,240,234,.5);
-      margin-top: 5px;
+      color: rgba(245,240,234,.4);
+      margin-bottom: 6px;
     }
     .gallery__price-val {
       font-family: var(--font-display);
-      font-size: clamp(18px, 2.5vw, 28px);
+      font-size: clamp(13px, 1.4vw, 17px);
       color: var(--color-whisper);
-      text-align: right;
     }
     .gallery__price-cta {
       display: block;
-      font-size: 11px;
+      font-size: 10px;
       letter-spacing: .1em;
       text-transform: uppercase;
       color: var(--color-accent);
-      margin-top: 5px;
-      text-align: right;
-    }
-
-    .gallery__footer {
-      padding: 18px var(--px) clamp(40px,6vw,72px);
-      max-width: calc(var(--max-w) + var(--px) * 2);
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-    .gallery__prog {
-      flex: 1;
-      height: 2px;
-      background: rgba(245,240,234,.08);
-    }
-    .gallery__prog-bar {
-      height: 100%;
-      background: var(--color-accent);
-      width: 12.5%;
-      transition: width .28s ease;
-    }
-    .gallery__count {
-      font-size: 12px;
-      letter-spacing: .1em;
-      color: rgba(245,240,234,.28);
-      white-space: nowrap;
+      margin-top: 3px;
     }
 
     /* ============================================================
@@ -848,6 +799,51 @@
     .footer__copy { font-size: 11px; color: rgba(245,240,234,.16); }
 
     /* ============================================================
+       09  FAQ
+    ============================================================ */
+    .faq {
+      background: var(--color-deep);
+      padding: var(--section-py) var(--px);
+    }
+    .faq__inner { max-width: var(--max-w); margin: 0 auto; }
+    .faq__grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-top: clamp(40px, 6vw, 64px);
+    }
+    @media (max-width: 720px) { .faq__grid { grid-template-columns: 1fr; } }
+
+    .faq__item {
+      background: rgba(245,240,234,.04);
+      padding: clamp(20px, 3.2vw, 36px);
+      border-top: 1px solid rgba(245,240,234,.07);
+    }
+    .faq__q {
+      font-family: var(--font-display);
+      font-size: clamp(16px, 1.5vw, 20px);
+      font-weight: 500;
+      color: var(--color-whisper);
+      margin-bottom: 10px;
+      line-height: 1.25;
+    }
+    .faq__a {
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.72;
+      color: rgba(245,240,234,.5);
+    }
+    .faq__cta {
+      text-align: center;
+      margin-top: clamp(36px, 5vw, 52px);
+    }
+    .faq__cta-note {
+      font-size: 13px;
+      color: rgba(245,240,234,.36);
+      margin-bottom: 18px;
+    }
+
+    /* ============================================================
        STICKY MOBILE CTA
     ============================================================ */
     .sticky {
@@ -890,9 +886,8 @@
       .btn--lg {
         padding: 15px 28px;
         font-size: 13px;
-      }
-      .gallery__name {
-        font-size: clamp(22px, 6vw, 34px);
+        width: 100%;
+        justify-content: center;
       }
       .sec-title {
         font-size: clamp(30px, 8vw, 48px);
@@ -902,6 +897,22 @@
       }
       .about__img-wrap {
         aspect-ratio: 3/2;
+      }
+      .about__facts {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .final-cta__title {
+        font-size: clamp(52px, 13vw, 72px);
+      }
+      .final-cta__alts {
+        font-size: 14px;
+      }
+      .process__steps {
+        grid-template-columns: 1fr;
+      }
+      .pricing__grid {
+        max-width: 100%;
       }
     }
 
@@ -915,7 +926,7 @@
 <!-- ─── NAV ────────────────────────────────────────────────── -->
 <nav class="nav" id="nav">
   <a href="#" class="nav__logo">Живая форма</a>
-  <a href="https://t.me/" class="btn btn--sm btn--primary" id="navCta">Обсудить проект →</a>
+  <a href="https://t.me/TELEGRAM_HANDLE" class="btn btn--sm btn--primary" id="navCta">Обсудить проект →</a>
 </nav>
 
 <!-- ─── 01 HERO ─────────────────────────────────────────────── -->
@@ -944,133 +955,90 @@
     <h2 class="sec-title sec-title--light" id="gallTitle">
       <span>Портфолио</span>
     </h2>
-    <div class="gallery__ctrls">
-      <button class="gallery__arr" id="gPrev" aria-label="Назад">←</button>
-      <button class="gallery__arr" id="gNext" aria-label="Вперёд">→</button>
-    </div>
   </div>
 
-  <div class="gallery__track" id="gallTrack">
+  <div class="gallery__grid">
 
-    <div class="gallery__card">
+    <div class="gallery__card fu">
       <div class="gallery__card-bg ph ph--g1"></div>
       <div class="gallery__card-info">
-        <div>
-          <div class="gallery__name">Тавола</div>
-          <div class="gallery__meta">⌀ 18 см · Серый матовый · партия от 5 шт.</div>
-        </div>
-        <div>
-          <div class="gallery__price-val">от 3 200 ₽/шт.</div>
-          <span class="gallery__price-cta">В проект →</span>
-        </div>
+        <div class="gallery__name">Тавола</div>
+        <div class="gallery__meta">⌀ 18 см · Серый матовый</div>
+        <div class="gallery__price-val">от 3 200 ₽/шт.</div>
+        <span class="gallery__price-cta">Партия от 5 шт. →</span>
       </div>
     </div>
 
-    <div class="gallery__card">
+    <div class="gallery__card fu d1">
       <div class="gallery__card-bg ph ph--g2"></div>
       <div class="gallery__card-info">
-        <div>
-          <div class="gallery__name">Призма</div>
-          <div class="gallery__meta">25×25×30 см · Офактуренный белый</div>
-        </div>
-        <div>
-          <div class="gallery__price-val">от 4 800 ₽/шт.</div>
-          <span class="gallery__price-cta">В проект →</span>
-        </div>
+        <div class="gallery__name">Призма</div>
+        <div class="gallery__meta">25×25×30 см · Офактуренный</div>
+        <div class="gallery__price-val">от 4 800 ₽/шт.</div>
+        <span class="gallery__price-cta">Партия от 5 шт. →</span>
       </div>
     </div>
 
-    <div class="gallery__card">
+    <div class="gallery__card fu d2">
       <div class="gallery__card-bg ph ph--g3"></div>
       <div class="gallery__card-info">
-        <div>
-          <div class="gallery__name">Фуст</div>
-          <div class="gallery__meta">⌀ 22 см · Терракота · серия 8 шт.</div>
-        </div>
-        <div>
-          <div class="gallery__price-val">от 3 800 ₽/шт.</div>
-          <span class="gallery__price-cta">В проект →</span>
-        </div>
+        <div class="gallery__name">Фуст</div>
+        <div class="gallery__meta">⌀ 22 см · Терракота</div>
+        <div class="gallery__price-val">от 3 800 ₽/шт.</div>
+        <span class="gallery__price-cta">Партия от 5 шт. →</span>
       </div>
     </div>
 
-    <div class="gallery__card">
+    <div class="gallery__card fu d3">
       <div class="gallery__card-bg ph ph--g4"></div>
       <div class="gallery__card-info">
-        <div>
-          <div class="gallery__name">Нобиле</div>
-          <div class="gallery__meta">h 40 см · Акцентная форма · лаундж</div>
-        </div>
-        <div>
-          <div class="gallery__price-val">от 7 500 ₽</div>
-          <span class="gallery__price-cta">В проект →</span>
-        </div>
+        <div class="gallery__name">Нобиле</div>
+        <div class="gallery__meta">h 40 см · Акцентная форма</div>
+        <div class="gallery__price-val">от 7 500 ₽</div>
+        <span class="gallery__price-cta">В проект →</span>
       </div>
     </div>
 
-    <div class="gallery__card">
+    <div class="gallery__card fu">
       <div class="gallery__card-bg ph ph--g5"></div>
       <div class="gallery__card-info">
-        <div>
-          <div class="gallery__name">Пьедесталь</div>
-          <div class="gallery__meta">⌀ 10 см · Настольная серия · кафе</div>
-        </div>
-        <div>
-          <div class="gallery__price-val">от 1 900 ₽/шт.</div>
-          <span class="gallery__price-cta">В проект →</span>
-        </div>
+        <div class="gallery__name">Пьедесталь</div>
+        <div class="gallery__meta">⌀ 10 см · Настольная серия</div>
+        <div class="gallery__price-val">от 1 900 ₽/шт.</div>
+        <span class="gallery__price-cta">Партия от 10 шт. →</span>
       </div>
     </div>
 
-    <div class="gallery__card">
+    <div class="gallery__card fu d1">
       <div class="gallery__card-bg ph ph--g6"></div>
       <div class="gallery__card-info">
-        <div>
-          <div class="gallery__name">Монолит</div>
-          <div class="gallery__meta">⌀ 35 см · Антрацит · лобби</div>
-        </div>
-        <div>
-          <div class="gallery__price-val">от 8 500 ₽</div>
-          <span class="gallery__price-cta">В проект →</span>
-        </div>
+        <div class="gallery__name">Монолит</div>
+        <div class="gallery__meta">⌀ 35 см · Антрацит · лобби</div>
+        <div class="gallery__price-val">от 8 500 ₽</div>
+        <span class="gallery__price-cta">В проект →</span>
       </div>
     </div>
 
-    <div class="gallery__card">
+    <div class="gallery__card fu d2">
       <div class="gallery__card-bg ph ph--g7"></div>
       <div class="gallery__card-info">
-        <div>
-          <div class="gallery__name">Панель</div>
-          <div class="gallery__meta">20×15 см · Настенная · коворкинг</div>
-        </div>
-        <div>
-          <div class="gallery__price-val">от 3 500 ₽/шт.</div>
-          <span class="gallery__price-cta">В проект →</span>
-        </div>
+        <div class="gallery__name">Панель</div>
+        <div class="gallery__meta">20×15 см · Настенная</div>
+        <div class="gallery__price-val">от 3 500 ₽/шт.</div>
+        <span class="gallery__price-cta">Партия от 5 шт. →</span>
       </div>
     </div>
 
-    <div class="gallery__card">
+    <div class="gallery__card fu d3">
       <div class="gallery__card-bg ph ph--g8"></div>
       <div class="gallery__card-info">
-        <div>
-          <div class="gallery__name">Бриф</div>
-          <div class="gallery__meta">Форма под ваш объект</div>
-        </div>
-        <div>
-          <div class="gallery__price-val">по запросу</div>
-          <span class="gallery__price-cta">Обсудить →</span>
-        </div>
+        <div class="gallery__name">Форма под проект</div>
+        <div class="gallery__meta">Разработка под ваш объект</div>
+        <div class="gallery__price-val">по запросу</div>
+        <span class="gallery__price-cta">Обсудить →</span>
       </div>
     </div>
 
-  </div>
-
-  <div class="gallery__footer">
-    <div class="gallery__prog">
-      <div class="gallery__prog-bar" id="gallProg"></div>
-    </div>
-    <div class="gallery__count" id="gallCount">01 / 08</div>
   </div>
 </section>
 
@@ -1225,7 +1193,7 @@
       Срок: <strong>3–5 недель</strong> &nbsp;·&nbsp; Образец <strong>перед серией</strong> &nbsp;·&nbsp; Партии <strong>от 5 шт.</strong>
     </p>
     <div class="process__cta fu d1">
-      <a href="https://t.me/" class="btn btn--primary btn--mag">Обсудить проект в Telegram</a>
+      <a href="https://t.me/TELEGRAM_HANDLE" class="btn btn--primary btn--mag">Обсудить проект в Telegram</a>
     </div>
   </div>
 </section>
@@ -1267,7 +1235,7 @@
       </div>
     </div>
     <div class="reviews__more">
-      <a href="https://t.me/">Смотреть кейсы в Telegram →</a>
+      <a href="https://t.me/TELEGRAM_HANDLE">Смотреть кейсы в Telegram →</a>
     </div>
   </div>
 </section>
@@ -1315,7 +1283,55 @@
   </div>
 </section>
 
-<!-- ─── 09 FINAL CTA ─────────────────────────────────────────── -->
+<!-- ─── 09 FAQ ────────────────────────────────────────────────── -->
+<section id="faq" class="faq">
+  <div class="faq__inner">
+    <div class="sec-head">
+      <span class="sec-label sec-label--accent">Вопросы</span>
+      <h2 class="sec-title sec-title--light" id="faqTitle"><span>Частые вопросы</span></h2>
+    </div>
+    <div class="faq__grid">
+      <div class="faq__item fu">
+        <div class="faq__q">Какой минимальный заказ?</div>
+        <p class="faq__a">Партиями от 5 штук — основной формат. Штучный заказ (от 1 шт.) тоже возможен, но по другой цене.</p>
+      </div>
+      <div class="faq__item fu d1">
+        <div class="faq__q">Образец — платный?</div>
+        <p class="faq__a">Да, по штучной цене. При размещении серии стоимость образца зачитывается в счёт партии.</p>
+      </div>
+      <div class="faq__item fu">
+        <div class="faq__q">Можно подобрать цвет под интерьер?</div>
+        <p class="faq__a">Да. Работаем по RAL, Pantone или образцу. Цвет согласовывается на образце до запуска серии.</p>
+      </div>
+      <div class="faq__item fu d1">
+        <div class="faq__q">Каковы реальные сроки?</div>
+        <p class="faq__a">3–5 недель от утверждения образца. Зависит от объёма и сложности формы. Крупные партии — уточнять отдельно.</p>
+      </div>
+      <div class="faq__item fu">
+        <div class="faq__q">Как организована доставка?</div>
+        <p class="faq__a">Доставляем на объект по всей России. Стоимость включается в расчёт. В Москве и МО — транспортная компания или курьером.</p>
+      </div>
+      <div class="faq__item fu d1">
+        <div class="faq__q">Работаете с юрлицами и ИП?</div>
+        <p class="faq__a">Да. Работаем по договору, предоставляем все закрывающие документы. Оплата безналичная.</p>
+      </div>
+      <div class="faq__item fu">
+        <div class="faq__q">Делаете нестандартную форму?</div>
+        <p class="faq__a">Да. Разрабатываем форму под проект — с эскизом и тестовым образцом. Стоимость разработки по запросу.</p>
+      </div>
+      <div class="faq__item fu d1">
+        <div class="faq__q">Подходит для улицы?</div>
+        <p class="faq__a">Да. Морозостойкий состав, гидрофобное покрытие. Дренажное отверстие — на выбор или без него.</p>
+      </div>
+    </div>
+    <div class="faq__cta fu">
+      <p class="faq__cta-note">Не нашли ответ — напишите, ответим в течение 2 часов.</p>
+      <a href="https://t.me/TELEGRAM_HANDLETELEGRAM_HANDLE" class="btn btn--primary">Написать в Telegram</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── 10 FINAL CTA ─────────────────────────────────────────── -->
 <section id="cta" class="final-cta">
   <div class="final-cta__inner">
     <h2 class="final-cta__title" id="ctaTitle">
@@ -1325,12 +1341,12 @@
       Опишите объект — обсудим состав, форму и сроки.<br>
       Бесплатно. Без обязательств. Отвечаю сегодня.
     </p>
-    <a href="https://t.me/" class="btn btn--primary btn--lg btn--mag fu d1">Обсудить в Telegram</a>
+    <a href="https://t.me/TELEGRAM_HANDLE" class="btn btn--primary btn--lg btn--mag fu d1">Обсудить в Telegram</a>
     <div class="final-cta__alts fu d2">
-      или <a href="https://wa.me/">WhatsApp</a> &nbsp;·&nbsp; или <a href="mailto:hello@example.com">hello@example.com</a>
+      или <a href="https://wa.me/WA_NUMBER">WhatsApp</a> &nbsp;·&nbsp; или <a href="mailto:EMAIL_ADDRESS">EMAIL_ADDRESS</a>
     </div>
     <div class="final-cta__meta fu d3">
-      Москва &nbsp;·&nbsp; @instagram_handle &nbsp;·&nbsp; 47+ объектов с 2019
+      Москва &nbsp;·&nbsp; @INSTAGRAM_HANDLE &nbsp;·&nbsp; 47+ объектов с 2019
     </div>
   </div>
 </section>
@@ -1340,9 +1356,9 @@
   <div class="footer__inner">
     <span class="footer__logo">Живая форма</span>
     <nav class="footer__links">
-      <a href="https://instagram.com/">Instagram</a>
-      <a href="https://t.me/">Telegram</a>
-      <a href="https://wa.me/">WhatsApp</a>
+      <a href="https://instagram.com/INSTAGRAM_HANDLE">Instagram</a>
+      <a href="https://t.me/TELEGRAM_HANDLE">Telegram</a>
+      <a href="https://wa.me/WA_NUMBER">WhatsApp</a>
     </nav>
     <span class="footer__copy">© 2026 · Бетонные кашпо · Производство в Москве</span>
   </div>
@@ -1350,7 +1366,7 @@
 
 <!-- ─── STICKY MOBILE CTA ────────────────────────────────────── -->
 <div class="sticky" id="sticky">
-  <a href="https://t.me/" class="sticky__btn">Обсудить проект в Telegram</a>
+  <a href="https://t.me/TELEGRAM_HANDLE" class="sticky__btn">Обсудить проект в Telegram</a>
 </div>
 
 <!-- ============================================================
