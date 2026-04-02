@@ -146,11 +146,17 @@
     .ph { position: relative; overflow: hidden; background-size: cover; background-position: center; }
     .gallery__card-bg { background-position: center 40%; }
     .about__img-bg { background-position: center 20%; }
-    .ph--hero    { background: linear-gradient(160deg, #232321 0%, #1a1a18 60%, #0f0f0e 100%); }
-    /* ph--g1 … ph--g8: заменить на фото изделий */
-    .ph--process { background-image: url('https://images.pexels.com/photos/1999895/pexels-photo-1999895.jpeg?auto=compress&cs=tinysrgb&w=900&h=1100&fit=crop'); }
+    .ph--hero    { background-image: url('assets/images/hero-lifestyle.jpg'); background-color: #1a1a18; }
+    .ph--g1      { background-image: url('assets/images/gallery-1.jpg'); }
+    .ph--g2      { background-image: url('assets/images/gallery-2.jpg'); }
+    .ph--g3      { background-image: url('assets/images/gallery-3.jpg'); }
+    .ph--g4      { background-image: url('assets/images/gallery-4.jpg'); }
+    .ph--g5      { background-image: url('assets/images/gallery-5.jpg'); }
+    .ph--g6      { background-image: url('assets/images/gallery-6.jpg'); }
+    .ph--g7      { background-image: url('assets/images/gallery-7.jpg'); }
+    .ph--process { background-image: url('assets/images/process-hands.jpg'); }
     .ph--m1      { background-image: url('https://images.pexels.com/photos/20818874/pexels-photo-20818874.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'); }
-    .ph--m2      { background-image: url('https://images.pexels.com/photos/2768396/pexels-photo-2768396.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'); }
+    .ph--m2      { background-image: url('assets/images/texture-macro.jpg'); }
     .ph--m3      { background-image: url('https://images.pexels.com/photos/6898560/pexels-photo-6898560.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'); }
     .ph--m4      { background-image: url('https://images.pexels.com/photos/4505144/pexels-photo-4505144.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&fit=crop'); }
     .ph--r1      { background-image: url('https://images.pexels.com/photos/1903975/pexels-photo-1903975.jpeg?auto=compress&cs=tinysrgb&w=500&h=500&fit=crop'); }
@@ -163,6 +169,7 @@
 
     /* 1. Line-reveal for headings (JS wraps spans in .lw > .li) */
     .lw { overflow: hidden; display: block; }
+    .final-cta__title .lw { padding-bottom: 0.18em; }
     .li {
       display: block;
       transform: translateY(112%);
@@ -313,7 +320,7 @@
     }
     .gallery__card-bg {
       position: absolute; inset: 0;
-      background: #242422;
+      background-color: #242422;
       background-size: cover;
       background-position: center;
       transition: transform .65s var(--ease-out);
@@ -742,6 +749,8 @@
       line-height: .95;
       letter-spacing: -.035em;
       margin-bottom: 30px;
+      padding-right: 0.25em;
+      overflow: visible;
     }
     .final-cta__sub {
       font-size: clamp(15px,1.8vw,18px);
@@ -1030,7 +1039,7 @@
     </div>
 
     <div class="gallery__card fu d3">
-      <div class="gallery__card-bg ph ph--g8"></div>
+      <div class="gallery__card-bg ph"></div>
       <div class="gallery__card-info">
         <div class="gallery__name">Форма под проект</div>
         <div class="gallery__meta">Разработка под ваш объект</div>
@@ -1326,7 +1335,7 @@
     </div>
     <div class="faq__cta fu">
       <p class="faq__cta-note">Не нашли ответ — напишите, ответим в течение 2 часов.</p>
-      <a href="https://t.me/anton.betonanton.beton" class="btn btn--primary">Написать в Telegram</a>
+      <a href="https://t.me/anton.beton" class="btn btn--primary">Написать в Telegram</a>
     </div>
   </div>
 </section>
@@ -1405,7 +1414,7 @@
           io.unobserve(e.target);
         }
       });
-    }, { threshold: 0.14, rootMargin: '0px 0px -50px 0px' });
+    }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
 
     $$('.reveal-title, .fu, .ri').forEach(el => io.observe(el));
   }
